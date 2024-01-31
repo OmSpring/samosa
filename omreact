@@ -1,0 +1,147 @@
+[7:04 PM] Prashant Kamble
+import React, {useState, useEffect} from 'react';
+import {Text, View, TextInput, Image, Button} from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer,useIsFocused } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+ 
+const Top = createMaterialTopTabNavigator();
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+ 
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Logo" component={Logo} />  
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Home" component={Home} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+ 
+const Home = () => {
+  return (
+      <Tab.Navigator>
+        <Tab.Screen name='Dashboard' component={Dashboard} />
+        <Tab.Screen name='Profile' component={Profile} />
+        {/* <Tab.Screen name="Home" component={()=>Profile} initialParams={{ name: 'defaultName' }}  /> */}
+        {/* <Tab.Screen name='Profile' component={()=>Profile} /> */}
+        <Tab.Screen name='Setting' component={Setting} />
+      </Tab.Navigator>
+  );
+};
+ 
+const Dashboard = () =>{
+  return(
+    <Top.Navigator>
+      <Top.Screen name="About" component={About}/>
+      <Top.Screen name="Contact" component={Contact}/>
+    </Top.Navigator>
+    
+  );
+};
+function d1(){
+  return(
+  <Dashboard/>
+  )
+}
+function Profile(){
+// const Profile = ({props}) =>{
+  // console.warn(props.route.params);
+  return(
+  <View>
+    <Text>Hhhhh</Text>
+    {/* <Text>Hi Everyone{props.name}, Profile</Text> */}
+  </View>
+  );
+};
+ 
+const Setting = () =>{
+  
+  return(
+  <View>
+    <Text>Setting</Text>
+  </View>
+  );
+};
+ 
+const Contact =()=>{
+  return(<View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+    <Text style={{fontSize:40}}> Contact </Text>
+  </View>
+  );
+};
+ 
+const About =()=>{
+  return(<View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+    <Text style={{fontSize:40}}> About </Text>
+  </View>
+  );
+};
+ 
+function Login(props) {
+ 
+   const [name, setName] = useState("");
+   const [password, setPassword] = useState("");
+ 
+  function f1() {
+    if (name == "A" && password == "U") {
+      // props.navigation.navigate("Home",{name});
+      props.navigation.replace("Home");
+      // Alert.alert("Login Successfull");
+    } else if (name == "A" && password !== "U") {
+      console.warn("Error");
+    } else {
+      console.warn("Invalid Input");
+    }
+  }
+  return (<View>
+    <Text style={{ fontSize: 30, textAlign: 'center', marginBottom: 20 }}>Login Page</Text>
+ 
+    <Text style={{ fontSize: 30, margin: 5 }}>UserName:</Text>
+    <TextInput style={{ borderWidth: 2, height: 50, borderRadius: 50, textAlign: 'center' }}
+      placeholder='Enter your username'
+      value={name}
+      onChangeText={setName} />
+ 
+ 
+    <Text style={{ fontSize: 30, margin: 5 }}>Password:</Text>
+    <TextInput style={{ borderWidth: 2, height: 50, borderRadius: 50, textAlign: 'center' }}
+      placeholder='Enter your username'
+      value={password}
+      onChangeText={setPassword} />
+ 
+    <Button title='Submit' onPress={f1}/>
+    
+    {/* <Button title='Submit' onPress={f1} */}
+  
+ 
+  </View>
+ 
+ 
+  );
+}
+ 
+const Logo = ({ navigation }) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigation.replace('Login');
+    }, 3000);
+ 
+    return () => clearTimeout(timer);
+  }, []);
+ 
+  return (
+    <View>
+      <Image style={{marginTop:80, height:300, width:370}} source={require('/Users/prashant.kamble/f1/screenshot/p1.png')} />
+    </View>
+  );
+};
+ 
+ 
+export default App;
+ 
+ 
